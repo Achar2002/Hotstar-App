@@ -1,0 +1,52 @@
+pipeline {
+    agent any
+
+    stages {
+        
+        stage('git checkout') {
+            steps {
+               git 'https://github.com/Achar2002/Hotstar-App.git'
+            }
+        }
+        stage('mvn complie') {
+            steps {
+               sh 'mvn compile'
+            }
+        }
+        stage('mvn test') {
+            steps {
+               sh 'mvn test'
+            }
+        }
+        stage('mvn package') {
+            steps {
+               sh 'mvn clean package'
+            }
+        }
+        stage('publish to s3') {
+            steps {
+               echo "publish to s3"
+            }
+        }
+        stage('sonar scanner ') {
+            steps {
+               echo "sonar scanner "
+            }
+        }
+        stage('nexus repo') {
+            steps {
+               echo "nexus upolader"
+            }
+        }
+        stage('docker build') {
+            steps {
+               sh "docker build -t hotstar-app:${BUILD_NUMBER} ."
+            }
+        }
+        stage('docker push') {
+            steps {
+               
+            }
+        }
+    }
+}
